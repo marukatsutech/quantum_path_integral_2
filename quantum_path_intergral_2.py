@@ -215,8 +215,6 @@ def update(f):
 
 
 # Global variables
-num_of_points = 4000
-
 x_min = -10.
 x_max = 10.
 y_min = -4.
@@ -438,5 +436,5 @@ spn_t.pack(side='left')
 # btn_play.pack(side='left')
 
 # main loop
-anim = animation.FuncAnimation(fig, update, interval=200)
+anim = animation.FuncAnimation(fig, update, interval=500)
 root.mainloop()
