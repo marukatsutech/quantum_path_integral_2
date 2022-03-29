@@ -12,7 +12,7 @@ import mpl_toolkits.mplot3d.art3d as art3d
 def update_spirals():
     global y_spiral1, z_spiral1, spiral1, y_spiral2, z_spiral2, spiral2
     global y_spiral3, z_spiral3, spiral3, y_spiral4, z_spiral4, spiral4
-    global y_spiral_superposed, z_spiral_superposed, spiral_superposed
+    global y_spiral_superposed, z_spiral_superposed, spiral_superposed, amp_superposed, y_amp, curve_amp
     y_spiral1 = np.cos(y_theta0_clock1)
     z_spiral1 = np.sin(y_theta0_clock1)
     spiral1.set_xdata(x)
@@ -35,9 +35,15 @@ def update_spirals():
     spiral4.set_3d_properties(z_spiral4)
     y_spiral_superposed = (y_spiral1 + y_spiral2 + y_spiral3 + y_spiral4) / 4.
     z_spiral_superposed = (z_spiral1 + z_spiral2 + z_spiral3 + z_spiral4) / 4.
-    spiral_superposed .set_xdata(x)
-    spiral_superposed .set_ydata(y_spiral_superposed + offset_spiral_superposed)
-    spiral_superposed .set_3d_properties(z_spiral_superposed)
+    spiral_superposed.set_xdata(x)
+    spiral_superposed.set_ydata(y_spiral_superposed + offset_spiral_superposed)
+    spiral_superposed.set_3d_properties(z_spiral_superposed)
+    # update the amplitude of superposed phi
+    amp_superposed = np.sqrt(y_spiral_superposed ** 2. + z_spiral_superposed ** 2.)
+    y_amp = x * 0. + y_max
+    curve_amp.set_xdata(x)
+    curve_amp.set_ydata(y_amp)
+    curve_amp.set_3d_properties(amp_superposed)
 
 
 def update_curve_theta():
@@ -331,6 +337,10 @@ y_spiral_superposed = (y_spiral1 + y_spiral2 + y_spiral3 + y_spiral4) / 4.
 z_spiral_superposed = (z_spiral1 + z_spiral2 + z_spiral3 + z_spiral4) / 4.
 spiral_superposed, = ax1.plot(x, y_spiral_superposed + offset_spiral_superposed, z_spiral_superposed,
                               color='black', linewidth=1, label='Superposed phi (ave.)')
+
+amp_superposed = np.sqrt(y_spiral_superposed ** 2. + z_spiral_superposed ** 2.)
+y_amp = x * 0. + y_max
+curve_amp, = ax1.plot(x, y_amp, amp_superposed, color='gray', linewidth=1, label='Amplitude of superposed phi')
 
 y_theta0_clock1[y_min > y_theta0_clock1] = np.nan
 y_theta0_clock1[y_max < y_theta0_clock1] = np.nan
