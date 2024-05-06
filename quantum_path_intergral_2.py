@@ -359,7 +359,7 @@ y_theta0_clock4[y_max < y_theta0_clock4] = np.nan
 curve_theta0_clock4, = ax1.plot(x, y_theta0_clock4, z_theta0, color='blue', ls='--', linewidth=1,
                                 label='Theta of clock4')
 
-ax1.legend()
+ax1.legend(loc='lower right', fontsize=6)
 
 # Embed in Tkinter
 root = tk.Tk()
