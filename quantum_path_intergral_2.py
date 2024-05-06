@@ -446,5 +446,5 @@ spn_t.pack(side='left')
 # btn_play.pack(side='left')
 
 # main loop
-anim = animation.FuncAnimation(fig, update, interval=500)
+anim = animation.FuncAnimation(fig, update, interval=500, save_count=100)
 root.mainloop()
