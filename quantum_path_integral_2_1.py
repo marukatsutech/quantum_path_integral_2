@@ -277,6 +277,9 @@ y1_offset = y1 + offset
 plt_qtm1, = ax0.plot(x1, y1_offset, z1, color='green', linewidth=0.5, label='Quantum(t1)')
 ax0.add_line(plt_qtm1)
 
+# Legend
+# ax0.legend(loc='lower right', fontsize=6)
+
 # Embed in Tkinter
 root = tk.Tk()
 root.title(title_tk)
