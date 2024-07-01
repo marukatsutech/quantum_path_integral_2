@@ -202,7 +202,7 @@ z0a = np.sin(k0a * x * k_x_ratio) * gaussian0a_std
 y0a = np.cos(k0a * x * k_x_ratio) * 1j * gaussian0a_std
 qtm0a = z0a + y0a
 
-# Quantum 1 (temporary)
+# Quantum 1 (Initial)
 qtm1_buffer = np.dot(qtm0a, phase_convert_array)
 qtm1 = qtm1_buffer / np.sum(np.abs(qtm1_buffer))
 
@@ -266,7 +266,6 @@ ya = qtm0a.imag
 za = qtm0a.real
 ya_offset = ya + offset
 plt_qtm0a, = ax0.plot(xa, ya_offset, za, color='blue', linewidth=0.5, label='Quantum(t0)')
-ax0.add_line(plt_qtm0a)
 
 # Quantum 1
 offset = range_quantum_yz
@@ -275,10 +274,9 @@ y1 = qtm1.imag
 z1 = qtm1.real
 y1_offset = y1 + offset
 plt_qtm1, = ax0.plot(x1, y1_offset, z1, color='green', linewidth=0.5, label='Quantum(t1)')
-ax0.add_line(plt_qtm1)
 
 # Legend
-# ax0.legend(loc='lower right', fontsize=6)
+ax0.legend(loc='lower right', fontsize=6)
 
 # Embed in Tkinter
 root = tk.Tk()
