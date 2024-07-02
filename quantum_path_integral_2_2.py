@@ -6,6 +6,7 @@ import matplotlib.animation as animation
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 import tkinter as tk
 from tkinter import ttk
+from mpl_toolkits.mplot3d import proj3d
 
 
 def change_function():
@@ -13,6 +14,7 @@ def change_function():
 
 
 def step():
+    global cnt_step
     global x1, y1, z1, y1_offset
     global qtm1, qtm1_buffer
     global plt_qtm1
@@ -25,6 +27,7 @@ def step():
     plt_qtm1.set_xdata(x1)
     plt_qtm1.set_ydata(y1_offset)
     plt_qtm1.set_3d_properties(z1)
+    cnt_step += 1
 
 
 def update_qtm1():
@@ -192,8 +195,10 @@ def function_selected(event):
 # Animation control
 def reset():
     global is_play, cnt
+    global cnt_step
     is_play = False
     # cnt = 0
+    cnt_step = 1
     update_qtm1()
 
 
@@ -206,17 +211,19 @@ def switch():
 
 
 def update(f):
-    global cnt
-    # global txt_step
-    # txt_step.set_text("Step=" + str(cnt))
+    # global cnt
+    global txt_step
+    txt_step.set_text("Delta t * " + str(cnt_step))
     if is_play:
-        cnt += 1
+        # cnt += 1
+        pass
 
 
 # Global variables
 # Animation control
 cnt = 0
 is_play = False
+cnt_step = 1
 
 # Data structure
 range_xy = 3000
@@ -309,11 +316,9 @@ ax1.set_ylim(y_min1, y_max1)
 ax1.set_zlim(z_min1, z_max1)
 
 # Text items
-'''
-txt_step = ax0.text2D(x_min0, y_max0, "Step=" + str(0))
+txt_step = ax0.text2D(x_min0, y_max0, "Delta t * " + str(cnt_step))
 xz, yz, _ = proj3d.proj_transform(x_min0, y_max0, z_max0, ax0.get_proj())
 txt_step.set_position((xz, yz))
-'''
 
 # Plot items
 # Convert array
