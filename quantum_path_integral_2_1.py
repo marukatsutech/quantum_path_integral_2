@@ -183,7 +183,7 @@ range_quantum_yz = 0.002
 
 # Quantum parameter
 mass = 9.1093837015 * 1.0E-31
-tm, te = 1., 6
+tm, te = 1., 5
 t = tm * np.power(10., te)
 h = 6.62607015 * 1.0E-34
 
@@ -273,7 +273,7 @@ x1 = x
 y1 = qtm1.imag
 z1 = qtm1.real
 y1_offset = y1 + offset
-plt_qtm1, = ax0.plot(x1, y1_offset, z1, color='green', linewidth=0.5, label='Quantum(t1)')
+plt_qtm1, = ax0.plot(x1, y1_offset, z1, color='green', linewidth=0.5, label='Quantum(delta t)')
 
 # Legend
 ax0.legend(loc='lower right', fontsize=6)
