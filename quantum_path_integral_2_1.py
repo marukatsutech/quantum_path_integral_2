@@ -199,12 +199,14 @@ theta_conv = np.mod(np.deg2rad(mass * zz1 / (2. * h * t)), (2. * np.pi))
 phase_convert_array = np.sin(theta_conv) + np.cos(theta_conv) * 1j
 
 # Quantum 0a
-k0a = 12.
+# k0a = 12.
+k0a = 0.04
 sigma0a = 200.
 mu0a = 0.
 gaussian0a = 1 / (np.sqrt(2 * np.pi) * sigma0a) * np.exp(- (x - mu0a) ** 2 / (2 * sigma0a ** 2))
 gaussian0a_std = gaussian0a / np.sum(np.abs(gaussian0a))
-k_x_ratio = 1 / 360.
+# k_x_ratio = 1 / 360.
+k_x_ratio = 1.
 z0a = np.sin(k0a * x * k_x_ratio) * gaussian0a_std
 y0a = np.cos(k0a * x * k_x_ratio) * 1j * gaussian0a_std
 qtm0a = z0a + y0a
@@ -311,7 +313,7 @@ lbl_k0a.pack(side='left')
 var_k0a = tk.StringVar(root)
 var_k0a.set(str(k0a))
 spn_k0a = tk.Spinbox(
-    frm_qtm_a, textvariable=var_k0a, format="%.1f", from_=-20., to=20., increment=0.5,
+    frm_qtm_a, textvariable=var_k0a, format="%.2f", from_=-2., to=2., increment=0.01,
     command=lambda: set_k0a(var_k0a.get()), width=6
     )
 spn_k0a.pack(side='left')
