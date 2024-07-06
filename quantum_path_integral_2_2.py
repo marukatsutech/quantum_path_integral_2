@@ -382,7 +382,7 @@ lbl_k0a.pack(side='left')
 var_k0a = tk.StringVar(root)
 var_k0a.set(str(k0a))
 spn_k0a = tk.Spinbox(
-    frm_qtm_a, textvariable=var_k0a, format="%.1f", from_=-2., to=2., increment=0.01,
+    frm_qtm_a, textvariable=var_k0a, format="%.2f", from_=-2., to=2., increment=0.01,
     command=lambda: set_k0a(var_k0a.get()), width=6
     )
 spn_k0a.pack(side='left')
@@ -416,7 +416,7 @@ lbl_k0b.pack(side='left')
 var_k0b = tk.StringVar(root)
 var_k0b.set(str(k0b))
 spn_k0b = tk.Spinbox(
-    frm_qtm_b, textvariable=var_k0b, format="%.1f", from_=-2., to=2., increment=0.01,
+    frm_qtm_b, textvariable=var_k0b, format="%.2f", from_=-2., to=2., increment=0.01,
     command=lambda: set_k0b(var_k0b.get()), width=6
     )
 spn_k0b.pack(side='left')
