@@ -116,7 +116,6 @@ def function_selected(event):
 # Animation control
 def reset():
     global is_play, cnt
-    global cnt_step
     global k0a, sigma0a, mu0a
     is_play = False
     cnt = 0
@@ -146,7 +145,6 @@ def update(f):
 # Animation control
 cnt = 0
 is_play = False
-cnt_step = 1
 
 # Data structure
 range_x = 1000
