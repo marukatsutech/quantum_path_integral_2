@@ -100,7 +100,8 @@ fig.canvas.mpl_connect('motion_notify_event', on_move)
 
 
 class ActionSuperposed:
-    def __init__(self, ax=None, dx=None, mass=None, dt=None, phase=None, x_start=None, x_end=None, label=None, color=None):
+    def __init__(self, ax=None, dx=None, mass=None, dt=None, phase=None, x_start=None, x_end=None, label=None,
+                 color=None):
         self.ax = ax
         self.dx = dx
         self.dt = dt
@@ -115,7 +116,7 @@ class ActionSuperposed:
         self.k = 0.
         self.exponent = 2
 
-        # --- Helix (Superposed Propagator)---
+        # --- Helix (Superposed Propagator) ---
         self.action_phases = []
         for i in range(num):
             self.plt_helix, = self.ax.plot([], [], [], lw=0.5, color=self.color, ls='-', alpha=1.)
@@ -124,27 +125,38 @@ class ActionSuperposed:
         self.update_diagrams()
 
     def update_diagrams(self):
-        # --- Update Helix (Propagator Propagator) ---
-        x_position = np.linspace(self.x_start, self.x_end, 40000)
+        # --- Update Helix (Propagator) ---
+        x_position = np.linspace(self.x_start, self.x_end, 4000)
+
+        # Pre-calculate the position of each slit/path
+        x_start = - self.dx / 2.
+        x_step = self.dx / (num - 1) if num > 1 else 0
+        x_paths = x_start + np.arange(num) * x_step
+
         for i in range(num):
             helix_x = x_position
-            helix_y = x_position * 0.
-            helix_z = x_position * 0.
+            sum_cos = np.zeros_like(x_position)
+            sum_sin = np.zeros_like(x_position)
+
+            # Superposition of phases from each path (numerical path integration)
             for j in range(num):
-                x_start = - delta_x / 2.
-                x_step = delta_x / (num - 1)
-                x = x_start + j * x_step
-                self.phase = k * j * 2. * np.pi / (num - 1)
-                # Action S = m (x - x0)^2 / (2 Δt)
-                # Phase θ = m (x - x0)^2 / (2 ħ Δt)
-                theta = self.mass * (x_position - x) ** self.exponent / (2 * h_bar * self.dt * (i + 1)) + self.phase
+                x = x_paths[j]
+                current_phase = self.k * j * 2. * np.pi / (num - 1) if num > 1 else 0
 
-                helix_y = helix_y + i * 2 + self.radius * np.cos(theta)
-                helix_z = helix_z + self.radius * np.sin(theta)
+                # Calculate phase theta based on Action S
+                # Action S = m * (x - x0)^exponent / (2 * dt)
+                # Phase theta = S / h_bar
+                theta = self.mass * (x_position - x) ** self.exponent / (2 * h_bar * self.dt * (i + 1)) + current_phase
 
-            # Plot
-            helix_y = helix_y / num
-            helix_z = helix_z / num
+                sum_cos += np.cos(theta)
+                sum_sin += np.sin(theta)
+
+            # --- Normalization and Offset Processing ---
+            # Average the superposed waves and apply the y-axis offset (i * 2)
+            adjust = np.sqrt(1 / (i + 1)) * 4.
+            helix_y = (i * 2) + (self.radius * sum_cos / num) * adjust
+            helix_z = (self.radius * sum_sin / num) * adjust
+
             self.action_phases[i].set_data_3d(helix_x, helix_y, helix_z)
 
     def set_mass(self, value):
